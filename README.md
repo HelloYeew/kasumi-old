@@ -1,6 +1,6 @@
 <div align="center"> 
 
-![kasumi](kasumiicon.png =250x)
+![kasumi](kasumiicon.png)
 
 # Kasumi
 
