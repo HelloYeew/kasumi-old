@@ -5,17 +5,39 @@ import urllib.request
 def check_library():
     print("Start checking important library to run a program...")
 
-    # check tkinter
+    # check discord.py
     print("Checking discord.py...")
     try:
         import discord
     except ImportError:
         print("Discord.py not found.")
-        print("Run install command : -m pip install  -u discord.py")
+        print("Run install command : -m pip install discord.py")
         subprocess.check_call([sys.executable, "-m", "pip", "install", 'discord.py'])
         print("Discord.py install complete!")
     finally:
         import discord
+
+        # check scipy
+        print("Checking scipy...")
+        try:
+            import scipy
+        except ImportError:
+            print("Scipy not found.")
+            print("Run install command : -m pip install Scipy")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", 'scipy'])
+            print("Scipy install complete!")
+        finally:
+            import scipy
+
+        # check scipy
+        print("Checking numpy...")
+        try:
+            import scipy
+        except ImportError:
+            print("Scipy not found.")
+            print("Run install command : -m pip install Scipy")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", 'scipy'])
+            print("Scipy install complete!")
 
 
 
