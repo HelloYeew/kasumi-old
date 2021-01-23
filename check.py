@@ -14,30 +14,36 @@ def check_library():
         print("Run install command : -m pip install discord.py")
         subprocess.check_call([sys.executable, "-m", "pip", "install", 'discord.py'])
         print("Discord.py install complete!")
-    finally:
-        import discord
 
-        # check scipy
-        print("Checking scipy...")
-        try:
-            import scipy
-        except ImportError:
-            print("Scipy not found.")
-            print("Run install command : -m pip install Scipy")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", 'scipy'])
-            print("Scipy install complete!")
-        finally:
-            import scipy
+    # check scipy
+    print("Checking scipy...")
+    try:
+        import scipy
+    except ImportError:
+        print("Scipy not found.")
+        print("Run install command : -m pip install Scipy")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", 'scipy'])
+        print("Scipy install complete!")
 
-        # check scipy
-        print("Checking numpy...")
-        try:
-            import scipy
-        except ImportError:
-            print("Scipy not found.")
-            print("Run install command : -m pip install Scipy")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", 'scipy'])
-            print("Scipy install complete!")
+    # check scipy
+    print("Checking numpy...")
+    try:
+        import scipy
+    except ImportError:
+        print("Scipy not found.")
+        print("Run install command : -m pip install Scipy")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", 'scipy'])
+        print("Scipy install complete!")
+
+    # check requests
+    print("Checking requests...")
+    try:
+        import requests
+    except ImportError:
+        print("Requests not found.")
+        print("Run install command : -m pip install requests")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", 'requests'])
+        print("Requests install complete!")
 
 
 
