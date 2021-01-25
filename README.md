@@ -1,6 +1,7 @@
 <div align="center"> 
 
-![kasumi](kasumiicon.png )
+<!-- ![kasumi](icon/kasumiicon_circle.png ) -->
+<img src="icon/kasumiicon_circle.png" alt="Kasumi" width="500" height="500">
 
 # Kasumi
 

@@ -12,14 +12,17 @@ import json
 from genius_command import *
 from tenor import *
 
+# personal function
+from meet_link import *
+
 # before run please don't forget to put bot token
 
 description = "All Kasumi command is here"
 
 # put all API key and bot token here
 
-bot_token = 'bot token here'
-tenor_token = 'tenor token here'
+bot_token = "bot_token"
+tenor_token = "tenor_token"
 
 intents = discord.Intents.default()
 intents.members = True
@@ -86,8 +89,8 @@ async def _bot(ctx):
 
 
 @bot.command()
-async def spam(ctx, text: str, time: int):
-    """Spam spam and spam"""
+async def repeat(ctx, text: str, time: int):
+    """Repeat a message x times"""
     for i in range(time):
         await ctx.send(text)
 
@@ -101,11 +104,14 @@ async def help(ctx):
     - !pfp : Sender's profile picture
     - !saint : while True Saint's Emoji (You cannot stop it)
     - !genius : I'm genius!
-    - !spam (text) (x) : Spam a text x time(s)
+    - !repeat (text) (x) : Spam a text x time(s)
     
     **Genius Command**
     - !roots2 (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (two numbers)
     - !roots3 (float_x^2) (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (three numbers)
+    
+    **SKE Command**
+    - !discrete : Get a link for Discrete Mathematics Meet room
     '''
     embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
     embed.title = "❓ Help"
@@ -166,20 +172,23 @@ async def roots4(ctx, n1: float, n2: float, n3: float, n4: float):
 # tenor command zone
 
 @bot.command()
-async def topgif(ctx, word: str):
+async def gif(ctx, word: str):
     """Return first GIF search result"""
-    result = tenor(tenor_token, word, 1)
-    if result is not None:
-        embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
-        embed.title = f"🔎 Result of GIF search '{word}'"
-        embed.description = f"First GIF search result of *{word}*"
-        embed.set_image(url=result)
+    try:
+        result = tenor(tenor_token, word, 1)
+        if result is not None:
+            embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+            embed.title = f"🔎 Result of GIF search '{word}'"
+            embed.description = f"First GIF search result of *{word}*"
+            embed.set_image(url=result)
 
-    else:
-        embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
-        embed.title = f"🥲 No result of GIF search '{word}'"
-        embed.description = "Sad"
-    await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+            embed.title = f"🥲 No result of GIF search '{word}'"
+            embed.description = "Sad"
+        await ctx.send(embed=embed)
+    except:
+        await ctx.send("🔎 No search result!")
 
 
 @bot.command()
@@ -192,6 +201,16 @@ async def gif5(ctx, word: str):
         embed.description = f"Five top result in GIF search result of *{word}*\n **Result {i + 1}**"
         embed.set_image(url=result[i])
         await ctx.send(embed=embed)
+
+
+# SKE command
+
+link = MeetLink()
+
+@bot.command()
+async def discrete(ctx):
+    """Return discrete math meet link"""
+    await ctx.send(link.discrete_link)
 
 
 bot.run(bot_token)

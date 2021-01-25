@@ -127,4 +127,5 @@ dmypy.json
 .idea
 .DS_Store
 try.py
+meet_link.py
 token.txt
