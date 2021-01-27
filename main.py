@@ -4,16 +4,8 @@ from check import *
 check_library()
 
 # import requirement
-import discord
-from discord.ext import commands
-import random
-import requests
-import json
 from genius_command import *
 from tenor import *
-
-# personal function
-from meet_link import *
 
 # before run please don't forget to put bot token
 
@@ -21,13 +13,17 @@ description = "All Kasumi command is here"
 
 # put all API key and bot token here
 
-bot_token = "bot_token"
+bot_token = 'bot_token'
 tenor_token = "tenor_token"
+
+# You can change your prefix here
+
+prefix = "!"
 
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='!', description=description, intents=intents, help_command=None)
+bot = commands.Bot(command_prefix=prefix, description=description, intents=intents, help_command=None)
 
 
 @bot.event
@@ -47,8 +43,7 @@ async def joined(ctx, member: discord.Member):
 @bot.command()
 async def genius(ctx):
     """I'm genius!"""
-    await ctx.send('กูฉลาดไอสัส อย่าเถียงกู')
-    await ctx.send('https://tenor.com/view/saint-rock-head-shot-to-screen-smile-gif-19946978')
+    await ctx.send("I'm online and I'm genius!")
 
 
 @bot.command()
@@ -61,16 +56,6 @@ async def pfp(ctx):
     embed.set_author(name=author.display_name, url="https://youtu.be/dQw4w9WgXcQ", icon_url=author.avatar_url)
     embed.set_thumbnail(url=author.avatar_url)
     await ctx.send(embed=embed)
-    # add color!
-
-
-@bot.command()
-async def saint(ctx):
-    await ctx.send('''
-    while True:
-        await ctx.send('https://tenor.com/view/saint-rock-head-shot-to-screen-smile-gif-19946978')''')
-    while True:
-        await ctx.send('https://tenor.com/view/saint-rock-head-shot-to-screen-smile-gif-19946978')
 
 
 @bot.group()
@@ -102,16 +87,12 @@ async def help(ctx):
     help = '''
     **General Command**
     - !pfp : Sender's profile picture
-    - !saint : while True Saint's Emoji (You cannot stop it)
-    - !genius : I'm genius!
-    - !repeat (text) (x) : Spam a text x time(s)
+    - !genius : I'm genius! (Test Command)
+    - !repeat (text_or_sth) (x) : Spam a text x time(s)
     
     **Genius Command**
     - !roots2 (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (two numbers)
     - !roots3 (float_x^2) (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (three numbers)
-    
-    **SKE Command**
-    - !discrete : Get a link for Discrete Mathematics Meet room
     '''
     embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
     embed.title = "❓ Help"
@@ -189,28 +170,6 @@ async def gif(ctx, word: str):
         await ctx.send(embed=embed)
     except:
         await ctx.send("🔎 No search result!")
-
-
-@bot.command()
-async def gif5(ctx, word: str):
-    """Return 5 GIF search result"""
-    result = tenor(tenor_token, word, 5)
-    for i in range(5):
-        embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
-        embed.title = f"🔎 Result of GIF search '{word}'"
-        embed.description = f"Five top result in GIF search result of *{word}*\n **Result {i + 1}**"
-        embed.set_image(url=result[i])
-        await ctx.send(embed=embed)
-
-
-# SKE command
-
-link = MeetLink()
-
-@bot.command()
-async def discrete(ctx):
-    """Return discrete math meet link"""
-    await ctx.send(link.discrete_link)
 
 
 bot.run(bot_token)
