@@ -116,6 +116,22 @@ async def profile(ctx, member: discord.User):
     embed.set_footer(text="Hello! My name is Kasumi Toyama! My father is HelloYeew#2740.")
     await ctx.send(embed=embed)
 
+@bot.command()
+async def about(ctx):
+    embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+    father_info = """
+    My Father : HelloYeew#2740
+    GitHub : https://github.com/HelloYeew
+    Other Sns you can see in his Discord profiles.
+    """
+    embed.title = "About Kasumi"
+    embed.description = "I'm Kasumi Toyama. I am finding a star that can make a music band with my friend."
+    embed.add_field(name="GitHub Repositories", value="https://github.com/HelloYeew/kasumi", inline=False)
+    embed.add_field(name="About My Father", value=father_info, inline=False)
+    embed.set_thumbnail(url = "https://github.com/HelloYeew/kasumi/blob/main/icon/kasumiicon.jpg?raw=true")
+    embed.add_field(name = "Under Development", value="I'm under development. My father have a lot of work to make me. If you find something wrong about me you can DM ny father!")
+    await ctx.send(embed=embed)
+
 
 
 # help command
@@ -129,6 +145,7 @@ async def help(ctx):
     - {prefix}repeat (text_or_sth) (x) : Spam a text x time(s) (You cannot stop it)
     - {prefix}ping : Check ping
     - {prefix}profile (user) : Show full user's profile
+    - {prefix}about : About me
     
     **Genius Command**
     - {prefix}roots2 (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (two numbers)
