@@ -7,6 +7,7 @@ check_library()
 from genius_command import *
 from tenor import *
 from nsfw import *
+from spotify import *
 import os
 
 # before run please don't forget to put bot token
@@ -151,6 +152,9 @@ async def help(ctx):
     - {prefix}roots2 (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (two numbers)
     - {prefix}roots3 (float_x^2) (float_x^1) (float_x^0) : Calculate a roots of one-dimension polynomial (three numbers)
     
+    **Spotify Command (Beta)**
+    - {prefix}spotify (keyword) : Get first search result from Spotify
+    
     **NSFW Command**
     - {prefix}pornhub (keyword1) (keyword2) : Get first search result from Pornhub (You must put 2 keyword with spacebar between it because 1 keyword is not accurate enough)
     - {prefix}nhentai (keyword) : Get first search result from Pornhub
@@ -240,6 +244,26 @@ async def gif(ctx, word: str):
         await ctx.send(embed=embed)
     except:
         await ctx.send("🔎 No search result!")
+
+# Spotify Command
+
+@bot.command()
+async def spotify(ctx, *args):
+    keyword = " ".join(args[:])
+    search = spotify_first_search(keyword)
+    embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+    embed.title = f"🔎 Result of Spotify search '{keyword}'"
+    embed.description = f"First Spotify search result of *{keyword}*"
+    embed.add_field(name="Name", value=search['name'], inline=False)
+    embed.add_field(name="Artist", value=search['artist_name'], inline=False)
+    embed.add_field(name="Album Name", value=search['album_name'], inline=False)
+    embed.add_field(name="Available Country", value=search['available_country'], inline=False)
+    embed.add_field(name="Release Date", value=search['release_date'], inline=True)
+    embed.add_field(name="Popularity", value=search['popularity'], inline=True)
+    embed.add_field(name="Preview", value=search['preview_url'], inline=False)
+    embed.set_footer(text=f"Total result : {search['total_result']} | Hello! My name is Kasumi Toyama! My father is HelloYeew#2740.")
+    embed.set_image(url=search["image_url"])
+    await ctx.send(embed=embed)
 
 # NSFW Command
 
