@@ -9,6 +9,8 @@ from tenor import *
 from nsfw import *
 from spotify import *
 import os
+from datetime import datetime
+import pytz
 
 # before run please don't forget to put bot token
 
@@ -133,6 +135,23 @@ async def about(ctx):
     embed.add_field(name = "Under Development", value="I'm under development. My father have a lot of work to make me. If you find something wrong about me you can DM ny father!")
     await ctx.send(embed=embed)
 
+@bot.command()
+async def send(ctx, channel_id: int, *args):
+    channel = bot.get_channel(channel_id)
+    author = ctx.message.author
+    message = " ".join(args[:])
+    UTC = pytz.utc
+    await ctx.send(f"✉️ Sending your message to channel {channel_id}...")
+    embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+    embed.title = f"✉️ Message from {author.display_name}"
+    embed.description = message
+    embed.set_footer(text=f"Send by Kasumi | Time : {datetime.now(UTC)} UTC")
+    try:
+        await channel.send(embed=embed)
+        await ctx.send("✅ Complete!")
+    except:
+        await ctx.send("❌ Error : Check your channel ID or I can't reach that channel because I'm not in that server.")
+
 
 
 # help command
@@ -146,6 +165,8 @@ async def help(ctx):
     - {prefix}repeat (text_or_sth) (x) : Spam a text x time(s) (You cannot stop it)
     - {prefix}ping : Check ping
     - {prefix}profile (user) : Show full user's profile
+    - {prefix}send (channel_id) (message) : Send a message to a specific channel by a bot (You can target every channel that a bot can access)
+    - {prefix}gif (keyword) : Send first GIF search result of a keyword
     - {prefix}about : About me
     
     **Genius Command**
@@ -156,7 +177,7 @@ async def help(ctx):
     - {prefix}spotify (keyword) : Get first search result from Spotify
     
     **NSFW Command**
-    - {prefix}pornhub (keyword1) (keyword2) : Get first search result from Pornhub (You must put 2 keyword with spacebar between it because 1 keyword is not accurate enough)
+    - {prefix}pornhub (keyword) : Get first search result from Pornhub
     - {prefix}nhentai (keyword) : Get first search result from Pornhub
     '''
     embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
@@ -222,8 +243,9 @@ async def roots4(ctx, n1: float, n2: float, n3: float, n4: float):
 # tenor command zone
 
 @bot.command()
-async def gif(ctx, word: str):
+async def gif(ctx, *args):
     """Return first GIF search result"""
+    word = " ".join(args[:])
     author = ctx.message.author
     try:
         result = tenor(tenor_token, word, 1)
@@ -268,15 +290,16 @@ async def spotify(ctx, *args):
 # NSFW Command
 
 @bot.command()
-async def pornhub(ctx, word1: str, word2: str):
+async def pornhub(ctx, *args):
     """Return first search pornhub results"""
+    word = " ".join(args[:])
     if nsfw_mode == False:
         await ctx.send("You must enable NSFW command by **!nsfw on**")
     else:
-        result = pornhub_search(word1, word2)
+        result = pornhub_search(word)
         embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
-        embed.title = f"🔎 Result of Pornhub search '{word1} {word2}'"
-        embed.description = f"First Pornhub search result of *{word1} {word2}*"
+        embed.title = f"🔎 Result of Pornhub search '{word}'"
+        embed.description = f"First GIF search result of *{word}*"
         embed.add_field(name="Name", value=result[1], inline=False)
         embed.add_field(name="Link", value=result[0], inline=False)
         embed.add_field(name="Duration", value=result[2], inline=True)
@@ -287,22 +310,41 @@ async def pornhub(ctx, word1: str, word2: str):
 
 
 @bot.command()
-async def nhentai(ctx, word: str):
+async def nhentai(ctx, *args):
     """Return first search pornhub results"""
+    keyword = " ".join(args[:])
     if nsfw_mode == False:
         await ctx.send("You must enable NSFW command by **!nsfw on**")
     else:
-        result = nhentai_search(word)
-        embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
-        embed.title = f"🔎 Result of Nhentai search '{word}'"
-        embed.description = f"First Nhentai search result of *{word}*"
-        embed.add_field(name="Title", value=result.title, inline=False)
-        embed.add_field(name="Data Tag", value=result.data_tags, inline=False)
-        embed.add_field(name="Title ID", value=result.id, inline=True)
-        embed.add_field(name="Language", value=result.lang, inline=True)
-        embed.set_image(url=result.cover)
-        embed.set_footer(text="Hello! My name is Kasumi Toyama! My father is HelloYeew#2740.")
-        await ctx.send(embed=embed)
+        if keyword == "random":
+            result = nhentai_random()
+            embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+            embed.title = f"🔎 You have request random hentai from me?"
+            embed.description = f"You have it!"
+            embed.add_field(name="Title", value=result.title, inline=False)
+            embed.add_field(name="Second Title", value=result.secondary_title, inline=False)
+            embed.add_field(name="Tags", value=result.tags, inline=False)
+            embed.add_field(name="Artists", value=result.artists, inline=False)
+            embed.add_field(name="Characters", value=result.characters, inline=False)
+            embed.add_field(name="Parodies", value=result.parodies, inline=False)
+            embed.add_field(name="Group", value=result.parodies, inline=False)
+            embed.add_field(name="Language", value=result.languages, inline=True)
+            embed.add_field(name="Categories", value=result.categories, inline=True)
+            embed.set_image(url=result.images[0])
+            embed.set_footer(text="Hello! My name is Kasumi Toyama! My father is HelloYeew#2740.")
+            await ctx.send(embed=embed)
+        else:
+            result = nhentai_search(keyword)
+            embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
+            embed.title = f"🔎 Result of Nhentai search '{keyword}'"
+            embed.description = f"First Nhentai search result of *{keyword}*"
+            embed.add_field(name="Title", value=result.title, inline=False)
+            embed.add_field(name="Data Tag", value=result.data_tags, inline=False)
+            embed.add_field(name="Title ID", value=result.id, inline=True)
+            embed.add_field(name="Language", value=result.lang, inline=True)
+            embed.set_image(url=result.cover)
+            embed.set_footer(text="Hello! My name is Kasumi Toyama! My father is HelloYeew#2740.")
+            await ctx.send(embed=embed)
 
 
 bot.run(bot_token)

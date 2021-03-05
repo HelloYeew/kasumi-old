@@ -2,8 +2,8 @@ import pornhub
 from NHentai import NHentai
 
 
-def pornhub_search(word1, word2):
-    keywords = [word1, word2]
+def pornhub_search(word):
+    keywords = [word]
     client = pornhub.PornHub(keywords)
     result = []
     for video in client.getVideos(10, page=2):
@@ -19,4 +19,10 @@ def nhentai_search(keyword):
     nhentai = NHentai()
     SearchPage = nhentai.search(query=keyword, sort='popular', page=1)
     result = SearchPage.doujins[0]
+    return result
+
+
+def nhentai_random():
+    nhentai = NHentai()
+    result = nhentai.get_random()
     return result
