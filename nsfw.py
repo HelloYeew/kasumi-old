@@ -1,7 +1,8 @@
 import pornhub
 from NHentai import NHentai
+from utils import run_in_executor
 
-
+@run_in_executor
 def pornhub_search(word):
     keywords = [word]
     client = pornhub.PornHub(keywords)
@@ -15,6 +16,7 @@ def pornhub_search(word):
     return result
 
 
+@run_in_executor
 def nhentai_search(keyword):
     nhentai = NHentai()
     SearchPage = nhentai.search(query=keyword, sort='popular', page=1)
@@ -22,6 +24,7 @@ def nhentai_search(keyword):
     return result
 
 
+@run_in_executor
 def nhentai_random():
     nhentai = NHentai()
     result = nhentai.get_random()

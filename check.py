@@ -68,7 +68,7 @@ def check_library():
     # check pornhubapi
     print("Checking pornhubapi...")
     try:
-        import pornhubapi
+        import pornhub
     except ImportError:
         print("Pornhubapi not found.")
         print("Run install command : -m pip3 install pornhubapi")
@@ -104,3 +104,7 @@ def check_internet(url='http://www.youtube.com', timeout=3):
     except Exception as e:
         print(e)
         return False
+
+if __name__ == "__main__":
+    check_library()
+    check_internet()
