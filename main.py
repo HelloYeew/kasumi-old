@@ -8,6 +8,8 @@ from genius_command import *
 from tenor import *
 from nsfw import *
 from spotify import *
+from dotenv import load_dotenv
+load_dotenv()
 import os
 from datetime import datetime
 import pytz
