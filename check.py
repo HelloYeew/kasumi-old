@@ -68,7 +68,7 @@ def check_library():
     # check pornhubapi
     print("Checking pornhubapi...")
     try:
-        import pornhubapi
+        import pornhub
     except ImportError:
         print("Pornhubapi not found.")
         print("Run install command : -m pip3 install pornhubapi")
