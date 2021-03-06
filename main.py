@@ -319,7 +319,7 @@ async def nhentai(ctx, *args):
         await ctx.send("You must enable NSFW command by **!nsfw on**")
     else:
         if keyword == "random":
-            result = nhentai_random()
+            result = await nhentai_random()
             embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
             embed.title = f"🔎 You have request random hentai from me?"
             embed.description = f"You have it!"
@@ -336,7 +336,7 @@ async def nhentai(ctx, *args):
             embed.set_footer(text="Hello! My name is Kasumi Toyama! My father is HelloYeew#2740.")
             await ctx.send(embed=embed)
         else:
-            result = nhentai_search(keyword)
+            result = await nhentai_search(keyword)
             embed = discord.Embed(color=discord.Color.from_rgb(222, 137, 127))
             embed.title = f"🔎 Result of Nhentai search '{keyword}'"
             embed.description = f"First Nhentai search result of *{keyword}*"
