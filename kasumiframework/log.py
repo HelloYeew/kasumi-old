@@ -8,7 +8,8 @@ import time
 
 # https://stackoverflow.com/questions/13733552/logger-configuration-to-log-to-file-and-print-to-stdout
 
-def prepare_log(logfile="logs/main.log", filemode='a', level='notset', gmtime=True):
+
+def set_log(logfile="logs/main.log", filemode='a', level='notset', gmtime=True):
     """Start import logging system to bot
     """
     logging.info("Bot log setting :")

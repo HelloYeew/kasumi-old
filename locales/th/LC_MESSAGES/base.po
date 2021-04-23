@@ -14,4 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
+# Test
+
+msgid "Test"
+msgstr "เทสจ้า"
+
 
